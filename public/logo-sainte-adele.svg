@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .green { fill: #234734; }
+      .white { fill: #F8F6F1; }
+      .line { stroke: #F8F6F1; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
+      .text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        letter-spacing: 5px;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="600" cy="600" r="520" class="green"/>
+  <circle cx="600" cy="600" r="500" fill="none" stroke="#F8F6F1" stroke-width="8"/>
+
+  <!-- Church Body -->
+  <polygon points="600,260 360,540 840,540" class="white"/>
+  <rect x="410" y="540" width="380" height="280" class="white" rx="8"/>
+
+  <!-- Steeple -->
+  <polygon points="600,120 545,260 655,260" class="white"/>
+  <rect x="575" y="260" width="50" height="80" class="white"/>
+
+  <!-- Cross -->
+  <rect x="590" y="55" width="20" height="60" class="white" rx="10"/>
+  <rect x="565" y="75" width="70" height="20" class="white" rx="10"/>
+
+  <!-- Rosace -->
+  <circle cx="600" cy="620" r="52" fill="none" class="line"/>
+  <circle cx="600" cy="620" r="12" class="white"/>
+  <line x1="600" y1="568" x2="600" y2="672" class="line"/>
+  <line x1="548" y1="620" x2="652" y2="620" class="line"/>
+  <line x1="564" y1="584" x2="636" y2="656" class="line"/>
+  <line x1="636" y1="584" x2="564" y2="656" class="line"/>
+
+  <!-- Door -->
+  <path d="M530 820 V730 Q600 650 670 730 V820 Z" class="green"/>
+  <line x1="600" y1="690" x2="600" y2="820" class="line"/>
+
+  <!-- Trees -->
+  <polygon points="270,620 320,520 370,620" class="white"/>
+  <polygon points="250,690 320,560 390,690" class="white"/>
+  <rect x="308" y="690" width="24" height="55" class="white"/>
+
+  <polygon points="830,620 880,520 930,620" class="white"/>
+  <polygon points="810,690 880,560 950,690" class="white"/>
+  <rect x="868" y="690" width="24" height="55" class="white"/>
+
+  <!-- Circular Text Paths -->
+  <path id="topArc" d="M220,420 A380,380 0 0,1 980,420" fill="none"/>
+  <path id="bottomArc" d="M980,780 A380,380 0 0,1 220,780" fill="none"/>
+
+  <!-- Text -->
+  <text class="text white" font-size="48">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+      ÉGLISE UNIE
+    </textPath>
+  </text>
+
+  <text class="text white" font-size="48">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
+      SAINTE-ADÈLE
+    </textPath>
+  </text>
+</svg>

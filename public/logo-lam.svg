@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .green { fill: #234734; }
+      .white { fill: #F8F6F1; }
+      .stroke { stroke: #F8F6F1; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; }
+      .text { font-family: Arial, Helvetica, sans-serif; font-weight: 700; letter-spacing: 6px; }
+    </style>
+  </defs>
+
+  <!-- Outer Circle -->
+  <circle cx="600" cy="600" r="520" class="green" />
+  <circle cx="600" cy="600" r="500" fill="none" stroke="#F8F6F1" stroke-width="10" />
+
+  <!-- Cross -->
+  <rect x="565" y="230" width="70" height="250" rx="35" class="white" />
+  <rect x="500" y="295" width="200" height="70" rx="35" class="white" />
+
+  <!-- Trees -->
+  <polygon points="260,500 310,390 360,500" class="white" />
+  <polygon points="245,560 310,430 375,560" class="white" />
+  <rect x="300" y="560" width="20" height="40" class="white" />
+
+  <polygon points="820,500 870,390 920,500" class="white" />
+  <polygon points="805,560 870,430 935,560" class="white" />
+  <rect x="860" y="560" width="20" height="40" class="white" />
+
+  <!-- Flowing lines -->
+  <path d="M180 760 C300 680, 400 720, 520 760" class="stroke" fill="none" />
+  <path d="M220 820 C360 720, 460 760, 580 840" class="stroke" fill="none" />
+  <path d="M280 880 C420 790, 540 820, 660 910" class="stroke" fill="none" />
+  <path d="M620 760 C740 700, 840 700, 1020 780" class="stroke" fill="none" />
+  <path d="M600 840 C760 770, 860 780, 1000 860" class="stroke" fill="none" />
+
+  <!-- Circular Text -->
+  <path id="topArc" d="M220,420 A380,380 0 0,1 980,420" fill="none" />
+  <path id="bottomArc" d="M980,780 A380,380 0 0,1 220,780" fill="none" />
+
+  <text class="text white" font-size="52">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+      MINISTÈRE RÉGIONAL
+    </textPath>
+  </text>
+
+  <text class="text white" font-size="52">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
+      DES LAURENTIDES
+    </textPath>
+  </text>
+</svg>
