@@ -11,83 +11,80 @@ interface WaveHeroProps {
 export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }: WaveHeroProps) {
   return (
     <div className="relative overflow-hidden"
-      style={{ background: "linear-gradient(175deg,#061208 0%,#0e2218 40%,#0b1e35 100%)" }}>
+      style={{ background: "linear-gradient(175deg,#061208 0%,#0e2218 45%,#0b1e35 100%)" }}>
 
-      {/* Full-bleed SVG — cross top-centre, rays fill entire hero including upward */}
+      {/* ── Rays only — purely decorative SVG behind everything ── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <svg viewBox="0 0 800 560" preserveAspectRatio="xMidYMid slice"
+        <svg viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice"
           className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <radialGradient id="outerHalo" cx="50%" cy="30%" r="65%">
-              <stop offset="0%"   stopColor="white" stopOpacity="0.18"/>
-              <stop offset="40%"  stopColor="white" stopOpacity="0.07"/>
+            <radialGradient id="outerHalo" cx="50%" cy="22%" r="60%">
+              <stop offset="0%"   stopColor="white" stopOpacity="0.15"/>
+              <stop offset="45%"  stopColor="white" stopOpacity="0.05"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
-            <radialGradient id="innerHalo" cx="50%" cy="30%" r="22%">
-              <stop offset="0%"   stopColor="white" stopOpacity="0.32"/>
+            <radialGradient id="innerHalo" cx="50%" cy="22%" r="18%">
+              <stop offset="0%"   stopColor="white" stopOpacity="0.28"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
           </defs>
 
-          {/* Background halos centred at top */}
-          {/* Halos centred at cross position y=210 */}
-          <ellipse cx="400" cy="210" rx="500" ry="340" fill="url(#outerHalo)" className="cross-glow"/>
-          <ellipse cx="400" cy="210" rx="160" ry="160" fill="url(#innerHalo)" className="cross-glow"/>
+          {/* Halos behind rays — centred at y=155 (≈22% of 700) */}
+          <ellipse cx="400" cy="155" rx="480" ry="380" fill="url(#outerHalo)" className="cross-glow"/>
+          <ellipse cx="400" cy="155" rx="140" ry="140" fill="url(#innerHalo)" className="cross-glow"/>
 
-          {/* 24 rays — upward rays stay within viewBox top (y≥5) */}
-          <g className="rays-breath" transform="translate(400,210)">
+          {/* Rays from y=155 — long in all directions */}
+          <g className="rays-breath" transform="translate(400,155)">
             {Array.from({length: 24}, (_, i) => {
               const a = i * 15;
               const rad = (a - 90) * Math.PI / 180;
-              const r0 = 28;
-              const isUp = (a >= 300 || a <= 60);
-              const r1 = isUp ? 200 : 300 + (i % 3 === 0 ? 50 : 15);
+              const r0 = 26;
+              const r1 = 380 + (i % 4 === 0 ? 60 : i % 4 === 1 ? 30 : 10);
               return (
                 <line key={i}
-                  x1={Math.cos(rad) * r0}
-                  y1={Math.sin(rad) * r0}
-                  x2={Math.cos(rad) * r1}
-                  y2={Math.sin(rad) * r1}
+                  x1={Math.cos(rad) * r0} y1={Math.sin(rad) * r0}
+                  x2={Math.cos(rad) * r1} y2={Math.sin(rad) * r1}
                   stroke="white"
-                  strokeWidth={i % 6 === 0 ? "1.6" : i % 3 === 0 ? "1.0" : "0.55"}
-                  opacity={i % 6 === 0 ? "1" : "0.7"}/>
+                  strokeWidth={i % 6 === 0 ? "1.5" : i % 3 === 0 ? "0.9" : "0.5"}
+                  opacity={i % 6 === 0 ? "1" : "0.65"}/>
               );
             })}
           </g>
 
-          {/* Cross — fully contained, no clipping at top */}
-          <g className="cross-glow" transform="translate(400,210)">
-            {/* Vertical: from y=-50 to y=+70 → absolute y=160 to y=280 — fully visible */}
-            <rect x="-7" y="-50" width="14" height="120" rx="4" fill="white" opacity="0.97"/>
-            {/* Horizontal: upper third */}
-            <rect x="-44" y="-16" width="88" height="14" rx="4" fill="white" opacity="0.97"/>
-          </g>
-
-          {/* Forest silhouette at bottom */}
-          <g opacity="0.22">
-            <path d="M0,480 L50,440 L100,460 L150,425 L200,445 L250,415 L300,438 L350,408 L400,430 L450,405 L500,428 L550,400 L600,422 L650,396 L700,418 L750,395 L800,415 L800,500 L0,500 Z"
+          {/* Forest silhouette */}
+          <g opacity="0.20">
+            <path d="M0,580 L50,545 L100,562 L150,530 L200,548 L250,518 L300,540 L350,512 L400,534 L450,508 L500,530 L550,504 L600,526 L650,500 L700,522 L750,498 L800,520 L800,610 L0,610 Z"
               fill="#1a5c2a"/>
           </g>
 
-          {/* Waves at bottom */}
-          <g className="wave-1"><path d="M-80,445 C200,415 480,468 800,445 C1020,428 1200,452 1520,438 L1520,560 L-80,560 Z" fill="#C0392B" opacity="0.9"/></g>
-          <g className="wave-2"><path d="M-80,460 C180,432 460,482 780,460 C1080,438 1272,462 1520,450 L1520,560 L-80,560 Z" fill="#E67E22" opacity="0.84"/></g>
-          <g className="wave-3"><path d="M-80,473 C195,447 475,495 795,473 C1090,451 1275,474 1520,462 L1520,560 L-80,560 Z" fill="#F1C40F" opacity="0.76"/></g>
-          <g className="wave-4"><path d="M-80,484 C185,460 465,505 785,484 C1082,462 1273,484 1520,473 L1520,560 L-80,560 Z" fill="#2980B9" opacity="0.84"/></g>
-          <g className="wave-5"><path d="M-80,494 C188,471 468,515 788,494 C1083,473 1273,494 1520,483 L1520,560 L-80,560 Z" fill="#1ABC9C" opacity="0.76"/></g>
-          <path d="M-80,504 C192,482 472,524 792,504 C1085,483 1274,504 1520,493 L1520,560 L-80,560 Z" fill="#27AE60" opacity="0.9"/>
+          {/* Colour waves */}
+          <g className="wave-1"><path d="M-80,555 C200,525 480,575 800,555 C1020,540 1200,562 1520,548 L1520,700 L-80,700 Z" fill="#C0392B" opacity="0.9"/></g>
+          <g className="wave-2"><path d="M-80,568 C180,540 460,590 780,568 C1080,546 1272,570 1520,558 L1520,700 L-80,700 Z" fill="#E67E22" opacity="0.84"/></g>
+          <g className="wave-3"><path d="M-80,580 C195,554 475,602 795,580 C1090,558 1275,580 1520,568 L1520,700 L-80,700 Z" fill="#F1C40F" opacity="0.76"/></g>
+          <g className="wave-4"><path d="M-80,590 C185,566 465,612 785,590 C1082,568 1273,590 1520,578 L1520,700 L-80,700 Z" fill="#2980B9" opacity="0.84"/></g>
+          <g className="wave-5"><path d="M-80,600 C188,578 468,622 788,600 C1083,578 1273,600 1520,588 L1520,700 L-80,700 Z" fill="#1ABC9C" opacity="0.76"/></g>
+          <path d="M-80,610 C192,590 472,632 792,610 C1085,590 1274,610 1520,598 L1520,700 L-80,700 Z" fill="#27AE60" opacity="0.9"/>
         </svg>
       </div>
 
-      {/* Text — centred, pushed below the cross zone */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6"
-        style={{ paddingTop: "295px", paddingBottom: "60px" }}>
+      {/* ── CROSS in normal flow — ABOVE text, below nav buttons ── */}
+      <div className="relative z-10 flex justify-center" style={{ paddingTop: "72px", paddingBottom: "40px" }}>
+        <svg width="100" height="136" viewBox="0 0 100 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Vertical bar: full height, always fully visible */}
+          <rect x="43" y="0" width="14" height="136" rx="4.5" fill="white" opacity="0.96" className="cross-glow"/>
+          {/* Horizontal bar: upper third */}
+          <rect x="8" y="34" width="84" height="14" rx="4.5" fill="white" opacity="0.96" className="cross-glow"/>
+        </svg>
+      </div>
+
+      {/* ── TEXT — in normal flow, separated from cross by paddingBottom above ── */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 pb-16 pt-0">
         <p className="fade-up text-xs font-bold tracking-[0.28em] text-white/45 mb-4 uppercase"
           style={{ fontFamily: "system-ui" }}>
           {tagline}
         </p>
         <h1 className="fade-up-2 font-bold text-white leading-tight max-w-4xl"
-          style={{ fontSize: "clamp(28px,5.5vw,60px)", textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}>
+          style={{ fontSize: "clamp(28px,5.5vw,58px)", textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}>
           {title}
         </h1>
         <p className="fade-up-3 mt-4 text-white/65 max-w-lg leading-relaxed"
@@ -95,7 +92,7 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           {subtitle}
         </p>
         <a href={ctaHref}
-          className="fade-up-4 mt-7 inline-block px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide transition-all hover:scale-105"
+          className="fade-up-4 mt-7 mb-4 inline-block px-8 py-3.5 rounded-full font-semibold text-sm tracking-wide transition-all hover:scale-105"
           style={{ fontFamily: "system-ui", background: "white", color: "#1a3d2b", boxShadow: "0 4px 20px rgba(0,0,0,0.28)" }}>
           {ctaLabel} ↓
         </a>
