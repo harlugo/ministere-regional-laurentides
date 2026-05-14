@@ -30,26 +30,47 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2.5"
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center gap-3 px-4 py-2.5"
         style={{ background: "rgba(13,36,22,0.94)", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.07)", height: "52px" }}>
 
-        {/* Cross button + dropdown */}
-        <div className="relative" ref={ref}>
+        {/* ── HOME LOGO — always visible, click = back to / ── */}
+        <Link href="/" title={lang === "fr" ? "Accueil" : "Home"}
+          className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:scale-110"
+          style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.22)" }}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="6" y="1" width="2" height="12" rx="1" fill="white"/>
+            <rect x="1" y="4.5" width="12" height="2" rx="1" fill="white"/>
+          </svg>
+        </Link>
+
+        {/* ── CROSS MENU BUTTON ── */}
+        <div className="relative flex-shrink-0" ref={ref}>
           <button
             className={`cross-btn ${open ? "menu-open" : ""}`}
             onClick={() => setOpen(o => !o)}
             aria-label="Menu"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              {/* Vertical bar */}
               <rect className="cross-v" x="9" y="2" width="2" height="16" rx="1" fill="white"/>
-              {/* Horizontal bar */}
               <rect className="cross-h" x="2" y="9" width="16" height="2" rx="1" fill="white"/>
             </svg>
           </button>
 
           {/* Dropdown */}
           <div className={`nav-dropdown ${open ? "open" : ""}`}>
+
+            {/* ── Back to home — top of dropdown ── */}
+            <Link href="/"
+              className="nav-link back flex items-center gap-2"
+              onClick={() => setOpen(false)}
+              style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", marginBottom: "4px", paddingBottom: "12px" }}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                <rect x="6" y="1" width="2" height="12" rx="1" fill="currentColor"/>
+                <rect x="1" y="4.5" width="12" height="2" rx="1" fill="currentColor"/>
+              </svg>
+              {lang === "fr" ? "Accueil — Laurentides" : "Home — Laurentians"}
+            </Link>
+
             {/* Site switcher */}
             <div className="px-4 py-2 flex items-center gap-2">
               <Link href="/lam"
@@ -83,7 +104,7 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
         </div>
 
         {/* Site name */}
-        <span className="text-white/75 text-xs font-semibold tracking-wide truncate mx-3 max-w-[180px] md:max-w-none"
+        <span className="text-white/70 text-xs font-semibold tracking-wide truncate flex-1 min-w-0"
           style={{ fontFamily: "system-ui" }}>
           {siteName}
         </span>
@@ -96,6 +117,7 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
             onClick={() => lang !== "en" && onToggleLang()}>EN</button>
         </div>
       </nav>
+
       {/* Spacer */}
       <div style={{ height: "52px" }} />
     </>
