@@ -189,15 +189,20 @@ export default function BoutiquePage() {
             const isAdded = added === p.id;
             return (
               <div key={p.id} className="card flex flex-col overflow-hidden">
-                {/* Product photo */}
-                <div className="relative overflow-hidden" style={{ height:"220px", background:"#f0ede8" }}>
+                {/* Product photo — circle on coloured bg */}
+                <div className="flex flex-col items-center pt-6 pb-4 relative"
+                  style={{ background:"#f5f2ed" }}>
                   {p.tag && (
                     <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold"
                       style={{ background:p.tagColor, color:"white", fontFamily:"system-ui" }}>
                       {p.tag[lang]}
                     </span>
                   )}
-                  <Image src={p.img} alt={p.name[lang]} fill style={{ objectFit:"cover" }} sizes="300px"/>
+                  <div className="rounded-full overflow-hidden shadow-md"
+                    style={{ width:"160px", height:"160px", background:"white", flexShrink:0 }}>
+                    <Image src={p.img} alt={p.name[lang]} width={160} height={160}
+                      style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top" }}/>
+                  </div>
                 </div>
 
                 <div className="p-4 flex flex-col flex-1 gap-2">
