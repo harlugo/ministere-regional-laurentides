@@ -189,7 +189,7 @@ export default function BoutiquePage() {
             const isAdded = added === p.id;
             return (
               <div key={p.id} className="card flex flex-col overflow-hidden">
-                {/* Product photo — circle on coloured bg */}
+                {/* Product photo — perfect circle, square source image */}
                 <div className="flex flex-col items-center pt-6 pb-4 relative"
                   style={{ background:"#f5f2ed" }}>
                   {p.tag && (
@@ -198,10 +198,14 @@ export default function BoutiquePage() {
                       {p.tag[lang]}
                     </span>
                   )}
-                  <div className="rounded-full overflow-hidden shadow-md"
-                    style={{ width:"160px", height:"160px", background:"white", flexShrink:0 }}>
-                    <Image src={p.img} alt={p.name[lang]} width={160} height={160}
-                      style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top" }}/>
+                  <div style={{
+                    width:"164px", height:"164px", borderRadius:"50%",
+                    overflow:"hidden", flexShrink:0,
+                    boxShadow:"0 4px 16px rgba(0,0,0,0.12)",
+                    background:"#f0ede8",
+                  }}>
+                    <Image src={p.img} alt={p.name[lang]} width={164} height={164}
+                      style={{ width:"164px", height:"164px", display:"block" }}/>
                   </div>
                 </div>
 
