@@ -30,20 +30,18 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           </defs>
 
           {/* Background halos centred at top */}
-          <ellipse cx="400" cy="140" rx="520" ry="400" fill="url(#outerHalo)" className="cross-glow"/>
-          <ellipse cx="400" cy="140" rx="180" ry="180" fill="url(#innerHalo)" className="cross-glow"/>
+          {/* Halos centred at cross position y=210 */}
+          <ellipse cx="400" cy="210" rx="500" ry="340" fill="url(#outerHalo)" className="cross-glow"/>
+          <ellipse cx="400" cy="210" rx="160" ry="160" fill="url(#innerHalo)" className="cross-glow"/>
 
-          {/* 24 rays from cross centre — reach all the way up AND down */}
-          <g className="rays-breath" transform="translate(400,180)">
+          {/* 24 rays — upward rays stay within viewBox top (y≥5) */}
+          <g className="rays-breath" transform="translate(400,210)">
             {Array.from({length: 24}, (_, i) => {
               const a = i * 15;
               const rad = (a - 90) * Math.PI / 180;
-              const r0 = 30;
-              // Rays going upward (a between 300-360 and 0-60) are longer
+              const r0 = 28;
               const isUp = (a >= 300 || a <= 60);
-              const r1 = isUp
-                ? 420 + (i % 4 === 0 ? 80 : 40)   // longer upward
-                : 320 + (i % 3 === 0 ? 60 : 20);   // still long downward
+              const r1 = isUp ? 200 : 300 + (i % 3 === 0 ? 50 : 15);
               return (
                 <line key={i}
                   x1={Math.cos(rad) * r0}
@@ -57,12 +55,12 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
             })}
           </g>
 
-          {/* Cross — centred at top third, large and clear */}
-          <g className="cross-glow" transform="translate(400,180)">
-            {/* Vertical — tall */}
-            <rect x="-7" y="-72" width="14" height="144" rx="4" fill="white" opacity="0.97"/>
-            {/* Horizontal — in upper third of vertical */}
-            <rect x="-48" y="-22" width="96" height="14" rx="4" fill="white" opacity="0.97"/>
+          {/* Cross — fully contained, no clipping at top */}
+          <g className="cross-glow" transform="translate(400,210)">
+            {/* Vertical: from y=-50 to y=+70 → absolute y=160 to y=280 — fully visible */}
+            <rect x="-7" y="-50" width="14" height="120" rx="4" fill="white" opacity="0.97"/>
+            {/* Horizontal: upper third */}
+            <rect x="-44" y="-16" width="88" height="14" rx="4" fill="white" opacity="0.97"/>
           </g>
 
           {/* Forest silhouette at bottom */}
@@ -83,7 +81,7 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
 
       {/* Text — centred, pushed below the cross zone */}
       <div className="relative z-10 flex flex-col items-center text-center px-6"
-        style={{ paddingTop: "320px", paddingBottom: "60px" }}>
+        style={{ paddingTop: "295px", paddingBottom: "60px" }}>
         <p className="fade-up text-xs font-bold tracking-[0.28em] text-white/45 mb-4 uppercase"
           style={{ fontFamily: "system-ui" }}>
           {tagline}
