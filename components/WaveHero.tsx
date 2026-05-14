@@ -11,7 +11,7 @@ interface WaveHeroProps {
 export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }: WaveHeroProps) {
   return (
     <div className="relative overflow-hidden"
-      style={{ background: "linear-gradient(175deg,#061208 0%,#0e2218 45%,#0b1e35 100%)" }}>
+      style={{ background: "linear-gradient(175deg,#0e2a14 0%,#1a4228 40%,#142840 100%)" }}>
 
       {/* ── Rays only — purely decorative SVG behind everything ── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -19,12 +19,12 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="outerHalo" cx="50%" cy="22%" r="60%">
-              <stop offset="0%"   stopColor="white" stopOpacity="0.15"/>
+              <stop offset="0%"   stopColor="white" stopOpacity="0.22"/>
               <stop offset="45%"  stopColor="white" stopOpacity="0.05"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
             <radialGradient id="innerHalo" cx="50%" cy="22%" r="18%">
-              <stop offset="0%"   stopColor="white" stopOpacity="0.28"/>
+              <stop offset="0%"   stopColor="white" stopOpacity="0.38"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
           </defs>
@@ -52,18 +52,18 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           </g>
 
           {/* Forest silhouette */}
-          <g opacity="0.20">
+          <g opacity="0.35">
             <path d="M0,580 L50,545 L100,562 L150,530 L200,548 L250,518 L300,540 L350,512 L400,534 L450,508 L500,530 L550,504 L600,526 L650,500 L700,522 L750,498 L800,520 L800,610 L0,610 Z"
-              fill="#1a5c2a"/>
+              fill="#2a7838"/>
           </g>
 
           {/* Colour waves */}
-          <g className="wave-1"><path d="M-80,555 C200,525 480,575 800,555 C1020,540 1200,562 1520,548 L1520,700 L-80,700 Z" fill="#C0392B" opacity="0.9"/></g>
-          <g className="wave-2"><path d="M-80,568 C180,540 460,590 780,568 C1080,546 1272,570 1520,558 L1520,700 L-80,700 Z" fill="#E67E22" opacity="0.84"/></g>
-          <g className="wave-3"><path d="M-80,580 C195,554 475,602 795,580 C1090,558 1275,580 1520,568 L1520,700 L-80,700 Z" fill="#F1C40F" opacity="0.76"/></g>
-          <g className="wave-4"><path d="M-80,590 C185,566 465,612 785,590 C1082,568 1273,590 1520,578 L1520,700 L-80,700 Z" fill="#2980B9" opacity="0.84"/></g>
-          <g className="wave-5"><path d="M-80,600 C188,578 468,622 788,600 C1083,578 1273,600 1520,588 L1520,700 L-80,700 Z" fill="#1ABC9C" opacity="0.76"/></g>
-          <path d="M-80,610 C192,590 472,632 792,610 C1085,590 1274,610 1520,598 L1520,700 L-80,700 Z" fill="#27AE60" opacity="0.9"/>
+          <g className="wave-1"><path d="M-80,555 C200,525 480,575 800,555 C1020,540 1200,562 1520,548 L1520,700 L-80,700 Z" fill="#C0392B" opacity="0.98"/></g>
+          <g className="wave-2"><path d="M-80,568 C180,540 460,590 780,568 C1080,546 1272,570 1520,558 L1520,700 L-80,700 Z" fill="#E67E22" opacity="0.93"/></g>
+          <g className="wave-3"><path d="M-80,580 C195,554 475,602 795,580 C1090,558 1275,580 1520,568 L1520,700 L-80,700 Z" fill="#F1C40F" opacity="0.86"/></g>
+          <g className="wave-4"><path d="M-80,590 C185,566 465,612 785,590 C1082,568 1273,590 1520,578 L1520,700 L-80,700 Z" fill="#2980B9" opacity="0.93"/></g>
+          <g className="wave-5"><path d="M-80,600 C188,578 468,622 788,600 C1083,578 1273,600 1520,588 L1520,700 L-80,700 Z" fill="#1ABC9C" opacity="0.86"/></g>
+          <path d="M-80,610 C192,590 472,632 792,610 C1085,590 1274,610 1520,598 L1520,700 L-80,700 Z" fill="#27AE60" opacity="0.98"/>
         </svg>
       </div>
 
