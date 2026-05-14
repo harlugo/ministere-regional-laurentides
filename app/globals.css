@@ -143,3 +143,12 @@ body { font-family: Georgia, serif; background: var(--cream); color: #2c2c2c; ma
   50%      { opacity: 0.18; }
 }
 .rays-breath { animation: raysBreath 3.5s ease-in-out infinite; }
+
+/* Override cross-btn for better cross proportions */
+.cross-btn {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.12) !important;
+  border: 1.8px solid rgba(255,255,255,0.30) !important;
+}
