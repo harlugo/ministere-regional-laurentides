@@ -14,15 +14,7 @@ const WAVES = ["#C0392B","#E67E22","#F1C40F","#2980B9","#1ABC9C","#27AE60"];
 
 export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  // Detect scroll to switch nav background
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -32,52 +24,38 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Colors adapt to scroll position
-  const navBg = scrolled
-    ? "rgba(26, 61, 43, 0.97)"
-    : "rgba(13, 36, 22, 0.55)";
-  const navBorder = scrolled
-    ? "1px solid rgba(255,255,255,0.12)"
-    : "1px solid rgba(255,255,255,0.08)";
-
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5"
-        style={{
-          height: "54px",
-          background: navBg,
-          backdropFilter: "blur(16px)",
-          borderBottom: navBorder,
-          transition: "background 0.3s ease, border-color 0.3s ease",
-        }}>
+      {/* No bar — just two floating buttons */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-5 pt-4 pointer-events-none">
 
-        {/* Cross menu button */}
-        <div className="relative" ref={ref}>
+        {/* Cross menu — solid dark green circle */}
+        <div className="relative pointer-events-auto" ref={ref}>
           <button
-            className={`cross-btn ${open ? "menu-open" : ""}`}
             onClick={() => setOpen(o => !o)}
             aria-label="Menu"
-            style={{ width: "44px", height: "44px" }}>
-            {/*
-              Real religious cross proportions:
-              - Vertical bar: tall (full height)
-              - Horizontal bar: shorter, placed in upper third
-              - Arms clearly longer than wide
-            */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-              style={{ transition: "transform 0.3s ease" }}
-              className={open ? "" : ""}>
-              {/* Vertical bar — full height */}
-              <rect className="cross-v" x="10.5" y="1" width="3" height="22" rx="1.5" fill="white"/>
-              {/* Horizontal bar — upper third, shorter than vertical */}
-              <rect className="cross-h" x="3" y="7" width="18" height="3" rx="1.5" fill="white"/>
+            className={open ? "menu-open" : ""}
+            style={{
+              width: "46px", height: "46px",
+              borderRadius: "50%",
+              background: "#1a3d2b",
+              border: "2px solid rgba(255,255,255,0.25)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.35)",
+              transition: "transform 0.2s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
+            onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              {/* Religious cross: vertical full height, horizontal in upper third */}
+              <rect className="cross-v" x="9.5" y="1.5" width="3" height="19" rx="1.5" fill="white"/>
+              <rect className="cross-h" x="2.5" y="6"   width="17" height="3"  rx="1.5" fill="white"/>
             </svg>
           </button>
 
-          {/* Dropdown panel */}
+          {/* Dropdown */}
           <div className={`nav-dropdown ${open ? "open" : ""}`}>
-
-            {/* Home */}
             <Link href="/" className="nav-link flex items-center gap-3"
               onClick={() => setOpen(false)}
               style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "11px", marginBottom: "4px" }}>
@@ -87,20 +65,17 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
               {lang === "fr" ? "Accueil" : "Home"}
             </Link>
 
-            {/* Site switcher */}
             <div className="px-4 py-2 flex items-center gap-2">
-              <Link href="/lam" className={`site-pill ${site === "lam" ? "active" : "inactive"}`} onClick={() => setOpen(false)}>LAM — MRL</Link>
-              <Link href="/sainte-adele" className={`site-pill ${site === "sainte-adele" ? "active" : "inactive"}`} onClick={() => setOpen(false)}>Ste-Adèle</Link>
+              <Link href="/lam" className={`site-pill ${site==="lam"?"active":"inactive"}`} onClick={() => setOpen(false)}>LAM — MRL</Link>
+              <Link href="/sainte-adele" className={`site-pill ${site==="sainte-adele"?"active":"inactive"}`} onClick={() => setOpen(false)}>Ste-Adèle</Link>
             </div>
 
-            {/* Color strip */}
             <div className="mx-4 mb-1 flex rounded-full overflow-hidden" style={{ height: "2px" }}>
               {WAVES.map((c, i) => <div key={i} style={{ flex: 1, background: c }} />)}
             </div>
 
             <div className="nav-divider" />
 
-            {/* Nav items */}
             {items.map((item, i) => (
               <Link key={i} href={item.href}
                 className={`nav-link ${item.label.startsWith("←") ? "back" : ""}`}
@@ -111,15 +86,38 @@ export default function CrossNav({ site, lang, onToggleLang, items }: Props) {
           </div>
         </div>
 
-        {/* Lang toggle */}
-        <div className="lang-toggle">
-          <button className={`lang-btn ${lang === "fr" ? "active" : "inactive"}`}
-            onClick={() => lang !== "fr" && onToggleLang()}>FR</button>
-          <button className={`lang-btn ${lang === "en" ? "active" : "inactive"}`}
-            onClick={() => lang !== "en" && onToggleLang()}>EN</button>
+        {/* Lang toggle — solid dark green pill */}
+        <div className="pointer-events-auto" style={{
+          display: "flex",
+          background: "#1a3d2b",
+          border: "2px solid rgba(255,255,255,0.25)",
+          borderRadius: "999px",
+          overflow: "hidden",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.35)",
+        }}>
+          {(["FR","EN"] as const).map((l) => (
+            <button key={l}
+              onClick={() => lang !== l.toLowerCase() && onToggleLang()}
+              style={{
+                padding: "8px 16px",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.07em",
+                fontFamily: "system-ui",
+                border: "none",
+                outline: "none",
+                cursor: "pointer",
+                background: lang === l.toLowerCase() ? "white" : "transparent",
+                color: lang === l.toLowerCase() ? "#1a3d2b" : "rgba(255,255,255,0.8)",
+                transition: "all 0.2s",
+              }}>
+              {l}
+            </button>
+          ))}
         </div>
-      </nav>
-      <div style={{ height: "54px" }} />
+      </div>
+
+      {/* No spacer — buttons float over content */}
     </>
   );
 }
