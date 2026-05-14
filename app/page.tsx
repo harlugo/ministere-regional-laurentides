@@ -2,14 +2,169 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const WAVES = ["#C0392B","#E67E22","#F1C40F","#2980B9","#1ABC9C","#27AE60"];
-
 export default function Home() {
   const [lang, setLang] = useState<"fr"|"en">("fr");
 
   return (
-    <main className="min-h-screen flex flex-col overflow-hidden relative"
-      style={{ background: "linear-gradient(175deg,#060f08 0%,#0d1f14 35%,#08152a 100%)" }}>
+    <main className="relative min-h-screen overflow-hidden">
+
+      {/* ── FULL VIEWPORT SVG SCENE ── */}
+      <div className="absolute inset-0 z-0">
+        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"
+          className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            {/* Blue sky gradient */}
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="#0a2a4a"/>
+              <stop offset="30%"  stopColor="#1a4a7a"/>
+              <stop offset="65%"  stopColor="#2e6ea6"/>
+              <stop offset="100%" stopColor="#1a3d2b"/>
+            </linearGradient>
+            {/* Cross halo — large radial */}
+            <radialGradient id="crossHaloPage" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stopColor="white" stopOpacity="0.25"/>
+              <stop offset="30%"  stopColor="white" stopOpacity="0.12"/>
+              <stop offset="65%"  stopColor="white" stopOpacity="0.04"/>
+              <stop offset="100%" stopColor="white" stopOpacity="0"/>
+            </radialGradient>
+            <radialGradient id="crossInnerPage" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stopColor="white" stopOpacity="0.35"/>
+              <stop offset="100%" stopColor="white" stopOpacity="0"/>
+            </radialGradient>
+            <linearGradient id="mtnMain" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#2a5030"/>
+              <stop offset="100%" stopColor="#0e2216"/>
+            </linearGradient>
+            <linearGradient id="mtnMid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#1c3e22"/>
+              <stop offset="100%" stopColor="#0a1a10"/>
+            </linearGradient>
+            <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#1a3a6a" stopOpacity="0.85"/>
+              <stop offset="100%" stopColor="#0e2a1a" stopOpacity="0.65"/>
+            </linearGradient>
+          </defs>
+
+          {/* Sky — blue */}
+          <rect width="800" height="600" fill="url(#sky)"/>
+
+          {/* Clouds — subtle */}
+          <ellipse cx="120" cy="80" rx="70" ry="22" fill="white" opacity="0.06"/>
+          <ellipse cx="160" cy="72" rx="50" ry="18" fill="white" opacity="0.05"/>
+          <ellipse cx="600" cy="65" rx="80" ry="20" fill="white" opacity="0.05"/>
+          <ellipse cx="650" cy="58" rx="55" ry="16" fill="white" opacity="0.04"/>
+
+          {/* Stars (subtle — partly visible in dark blue sky) */}
+          {[[55,35],[110,20],[185,45],[295,25],[415,15],[520,38],[630,22],[720,48],[158,60],[390,12],[690,30]].map(([x,y],i)=>(
+            <circle key={i} cx={x} cy={y} r={i%3===0?1.4:0.9}
+              fill="white" opacity={0.15+((i*0.07)%0.2)}/>
+          ))}
+
+          {/* Far mountains */}
+          <path d="M0,370 L80,295 L160,328 L240,262 L330,302 L420,238 L510,278 L590,222 L670,262 L750,218 L800,242 L800,420 L0,420 Z"
+            fill="#0f2618" opacity="0.85"/>
+
+          {/* Mid mountains */}
+          <path d="M0,400 L100,322 L190,355 L285,288 L380,330 L465,272 L545,308 L620,255 L695,292 L770,252 L800,268 L800,450 L0,450 Z"
+            fill="url(#mtnMid)"/>
+
+          {/* ── MAIN PEAK — right of centre, where the cross lives ── */}
+          {/* Peak at x≈540, so cross is off-centre right, text is left */}
+          <path d="M0,460 L80,400 L150,420 L240,370 L320,400 L400,440 L460,400 L500,360 L540,300 L580,355 L630,385 L700,420 L760,445 L800,460 L800,510 L0,510 Z"
+            fill="url(#mtnMain)"/>
+
+          {/* Snow cap on main peak (x=540, y=300) */}
+          <path d="M533,305 L540,298 L547,304 L552,298 L557,303 L553,310 L545,314 L535,311 Z"
+            fill="white" opacity="0.6"/>
+
+          {/* Left secondary peak */}
+          <path d="M0,480 L90,415 L150,435 L220,390 L290,415 L360,440 L420,470 L0,510 Z"
+            fill="#0e2216" opacity="0.8"/>
+
+          {/* Forest on main peak slopes */}
+          {[[445,450],[460,442],[475,447],[490,440],[505,445],[520,438],[555,438],[570,432],[585,438],[600,432],[615,437]].map(([x,y],i)=>(
+            <g key={i}>
+              <polygon points={`${x},${y} ${x-6},${y+13} ${x+6},${y+13}`} fill="#082010" opacity="0.95"/>
+              <polygon points={`${x},${y-5} ${x-4},${y+4} ${x+4},${y+4}`} fill="#0b2814" opacity="0.88"/>
+            </g>
+          ))}
+
+          {/* Left forest */}
+          {[[130,465],[148,458],[166,463],[184,456],[202,461],[220,454]].map(([x,y],i)=>(
+            <g key={i}>
+              <polygon points={`${x},${y} ${x-6},${y+13} ${x+6},${y+13}`} fill="#082010" opacity="0.9"/>
+              <polygon points={`${x},${y-5} ${x-4},${y+4} ${x+4},${y+4}`} fill="#0b2814" opacity="0.85"/>
+            </g>
+          ))}
+
+          {/* ── CROSS on peak (x=540, y=300) — large rays fill sky ── */}
+
+          {/* Enormous background halo — fills much of sky */}
+          <ellipse cx="540" cy="270" rx="340" ry="280" fill="url(#crossHaloPage)" className="cross-glow"/>
+          {/* Concentrated inner halo */}
+          <ellipse cx="540" cy="270" rx="120" ry="120" fill="url(#crossInnerPage)" className="cross-glow"/>
+
+          {/* Long rays from peak cross */}
+          <g className="rays-breath" transform="translate(540,270)">
+            {Array.from({length:20}, (_,i) => {
+              const a = i * 18;
+              const rad = (a - 90) * Math.PI / 180;
+              const r0 = 22;
+              const r1 = 280 + (i%4===0?60:i%4===1?30:i%4===2?10:0);
+              return (
+                <line key={i}
+                  x1={Math.cos(rad)*r0} y1={Math.sin(rad)*r0}
+                  x2={Math.cos(rad)*r1} y2={Math.sin(rad)*r1}
+                  stroke="white"
+                  strokeWidth={i%5===0?"1.6":i%3===0?"1.0":"0.55"}
+                  opacity={i%5===0?"1":"0.75"}/>
+              );
+            })}
+          </g>
+
+          {/* The cross — good size, sits on peak */}
+          <g className="cross-glow" transform="translate(540,270)">
+            <rect x="-7.5" y="-62" width="15" height="124" rx="3.5" fill="white" opacity="0.97"/>
+            <rect x="-46" y="-18" width="92" height="15" rx="3.5" fill="white" opacity="0.97"/>
+          </g>
+
+          {/* Lake */}
+          <ellipse cx="400" cy="528" rx="340" ry="48" fill="url(#lake)"/>
+          <path d="M180,523 Q300,517 420,525 Q530,531 620,520" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" fill="none"/>
+
+          {/* Village houses — left side, away from cross */}
+          {[
+            [90,460,24,20],[115,466,17,14],[170,452,22,18],[198,458,15,12],
+          ].map(([x,y,w,h],i)=>(
+            <g key={i} transform={`translate(${x},${y})`}>
+              <rect x="0" y={h*0.45} width={w} height={h} fill="#1a3d20" rx="1"/>
+              <polygon points={`${w/2},0 -2,${h*0.5} ${w+2},${h*0.5}`} fill="#102815"/>
+              <rect x={w*0.35} y={h*0.88} width={w*0.3} height={h*0.58} fill="#050e08"/>
+              <rect x="2" y={h*0.52} width={w*0.26} height={h*0.34} fill="rgba(255,225,120,0.22)" rx="1"/>
+              <rect x={w*0.72} y={h*0.52} width={w*0.26} height={h*0.34} fill="rgba(255,225,120,0.22)" rx="1"/>
+            </g>
+          ))}
+
+          {/* Chapel — left zone, below the text area */}
+          <g transform="translate(65,422)" className="float">
+            <rect x="0" y="28" width="42" height="30" fill="#1e4a28" rx="2"/>
+            <polygon points="21,8 -2,30 44,30" fill="#163820"/>
+            <rect x="16" y="50" width="10" height="8" fill="#050e08"/>
+            <rect x="3" y="34" width="8" height="10" fill="rgba(255,240,160,0.28)" rx="1"/>
+            <rect x="31" y="34" width="8" height="10" fill="rgba(255,240,160,0.28)" rx="1"/>
+            <rect x="16" y="0" width="10" height="18" fill="#1a4225" rx="1"/>
+            <polygon points="21,-5 13,2 29,2" fill="#112a18"/>
+          </g>
+
+          {/* Coloured wave ribbon at very bottom */}
+          <g className="wave-1"><path d="M-50,560 C150,540 380,572 640,554 C760,544 790,552 850,546 L850,580 L-50,580 Z" fill="#C0392B" opacity="0.88"/></g>
+          <g className="wave-2"><path d="M-50,568 C140,550 370,580 630,563 C752,554 788,562 850,556 L850,588 L-50,588 Z" fill="#E67E22" opacity="0.82"/></g>
+          <g className="wave-3"><path d="M-50,575 C155,558 380,587 640,570 C755,562 788,569 850,563 L850,596 L-50,596 Z" fill="#F1C40F" opacity="0.75"/></g>
+          <g className="wave-4"><path d="M-50,582 C148,566 373,594 633,578 C752,570 787,576 850,570 L850,604 L-50,604 Z" fill="#2980B9" opacity="0.82"/></g>
+          <g className="wave-5"><path d="M-50,589 C152,574 377,600 637,585 C753,577 787,583 850,577 L850,610 L-50,610 Z" fill="#1ABC9C" opacity="0.75"/></g>
+          <path d="M-50,596 C155,582 380,606 640,591 C754,583 787,589 850,583 L850,616 L-50,616 Z" fill="#27AE60" opacity="0.88"/>
+        </svg>
+      </div>
 
       {/* Lang toggle */}
       <div className="absolute top-4 right-5 z-20">
@@ -19,187 +174,53 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Full-viewport SVG mountain scene */}
-      <div className="absolute inset-0 z-0">
-        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"
-          className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="crossHalo" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="white" stopOpacity="0.18"/>
-              <stop offset="40%" stopColor="white" stopOpacity="0.06"/>
-              <stop offset="100%" stopColor="white" stopOpacity="0"/>
-            </radialGradient>
-            <radialGradient id="crossHaloLarge" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="white" stopOpacity="0.08"/>
-              <stop offset="100%" stopColor="white" stopOpacity="0"/>
-            </radialGradient>
-            <linearGradient id="mountainMain" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#243d28"/>
-              <stop offset="100%" stopColor="#0e2216"/>
-            </linearGradient>
-            <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#162b1c"/>
-              <stop offset="100%" stopColor="#0a1a10"/>
-            </linearGradient>
-            <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0d2440" stopOpacity="0.85"/>
-              <stop offset="100%" stopColor="#1a3d2b" stopOpacity="0.6"/>
-            </linearGradient>
-          </defs>
+      {/* ── TEXT — upper LEFT, well away from cross (upper right) ── */}
+      <div className="relative z-10 flex flex-col justify-center min-h-screen px-8 md:px-14"
+        style={{ maxWidth: "420px" }}>
 
-          {/* Deep sky */}
-          <rect width="800" height="600" fill="#060f08"/>
-          <rect width="800" height="380" fill="url(#mountainFar)" opacity="0.4"/>
+        <p className="fade-up text-xs font-bold tracking-[0.3em] mb-4 uppercase"
+          style={{ color: "rgba(255,255,255,0.45)", fontFamily: "system-ui" }}>
+          {lang==="fr"?"Église Unie du Canada":"United Church of Canada"}
+        </p>
+        <h1 className="fade-up-2 font-bold text-white leading-tight mb-3"
+          style={{ fontSize: "clamp(32px,5.5vw,58px)", textShadow: "0 2px 20px rgba(0,0,0,0.7)" }}>
+          {lang==="fr"?"Laurentides":"The Laurentians"}
+        </h1>
+        <p className="fade-up-3 text-white/55 mb-8"
+          style={{ fontFamily: "system-ui", fontSize: "15px", lineHeight: "1.65" }}>
+          {lang==="fr"
+            ?"9 paroisses inclusives au nord de Montréal"
+            :"9 inclusive parishes north of Montreal"}
+        </p>
 
-          {/* Stars */}
-          {[[55,35],[110,22],[185,48],[295,28],[415,38],[520,18],[630,42],[720,55],[158,72],[390,14],[510,65],[305,45],[72,80],[445,25],[695,30]].map(([x,y],i)=>(
-            <circle key={i} cx={x} cy={y} r={i%4===0?1.8:i%3===0?1.3:0.9}
-              fill="white" opacity={0.3+((i*0.13)%0.5)}/>
-          ))}
-
-          {/* Far mountains */}
-          <path d="M0,360 L70,278 L145,315 L220,245 L310,290 L395,220 L475,265 L555,205 L635,248 L715,195 L800,232 L800,400 L0,400 Z"
-            fill="#0d1f14" opacity="0.9"/>
-
-          {/* Mid mountains */}
-          <path d="M0,390 L90,308 L175,342 L265,275 L360,318 L445,262 L530,300 L605,245 L680,282 L760,240 L800,260 L800,430 L0,430 Z"
-            fill="url(#mountainFar)" opacity="0.95"/>
-
-          {/* ═══ MAIN PEAK — centre, where the cross sits ═══ */}
-          <path d="M200,440 L310,310 L360,338 L400,280 L440,310 L490,330 L560,360 L620,400 L680,430 L800,460 L800,500 L0,500 L0,470 L100,445 Z"
-            fill="url(#mountainMain)"/>
-          {/* Peak snow cap */}
-          <path d="M393,284 L400,278 L407,283 L411,276 L416,281 L413,288 L406,292 L395,290 Z"
-            fill="white" opacity="0.55"/>
-
-          {/* Secondary peaks */}
-          <path d="M0,470 L100,390 L155,415 L210,375 L270,400 L330,360 L370,380 L400,400 L800,460 L800,500 L0,500 Z"
-            fill="#0e2216" opacity="0.7"/>
-
-          {/* Forest left slope */}
-          {[[230,430],[248,422],[266,428],[284,420],[302,425],[320,418],[338,423],[356,416]].map(([x,y],i)=>(
-            <g key={i}>
-              <polygon points={`${x},${y} ${x-7},${y+15} ${x+7},${y+15}`} fill="#0a1e10" opacity="0.92"/>
-              <polygon points={`${x},${y-6} ${x-5},${y+4} ${x+5},${y+4}`} fill="#0d2614" opacity="0.85"/>
-            </g>
-          ))}
-          {/* Forest right slope */}
-          {[[450,420],[468,412],[486,418],[504,410],[522,416],[540,408],[558,414],[576,406]].map(([x,y],i)=>(
-            <g key={i}>
-              <polygon points={`${x},${y} ${x-7},${y+15} ${x+7},${y+15}`} fill="#0a1e10" opacity="0.92"/>
-              <polygon points={`${x},${y-6} ${x-5},${y+4} ${x+5},${y+4}`} fill="#0d2614" opacity="0.85"/>
-            </g>
-          ))}
-
-          {/* ═══ BIG CROSS on the mountain peak ═══ */}
-          {/* Large halo behind cross */}
-          <ellipse cx="400" cy="235" rx="90" ry="90" fill="url(#crossHaloLarge)" className="cross-glow"/>
-          {/* Medium halo */}
-          <ellipse cx="400" cy="235" rx="50" ry="50" fill="url(#crossHalo)" className="cross-glow"/>
-
-          {/* Light rays — breathing */}
-          <g className="rays-breath" transform="translate(400,235)">
-            {[0,30,60,90,120,150,180,210,240,270,300,330].map((a,i)=>(
-              <line key={i}
-                x1={Math.cos((a-90)*Math.PI/180)*18}
-                y1={Math.sin((a-90)*Math.PI/180)*18}
-                x2={Math.cos((a-90)*Math.PI/180)*95}
-                y2={Math.sin((a-90)*Math.PI/180)*95}
-                stroke="white" strokeWidth={i%3===0?"1.2":"0.7"} opacity="1"/>
-            ))}
-          </g>
-
-          {/* The cross itself */}
-          <g className="cross-glow" transform="translate(400,235)">
-            {/* Vertical */}
-            <rect x="-5.5" y="-54" width="11" height="108" rx="3" fill="white" opacity="0.97"/>
-            {/* Horizontal */}
-            <rect x="-34" y="-16" width="68" height="11" rx="3" fill="white" opacity="0.97"/>
-          </g>
-
-          {/* Lake */}
-          <ellipse cx="400" cy="508" rx="340" ry="52" fill="url(#lakeGrad)"/>
-          <path d="M180,503 Q280,497 400,505 Q510,511 620,500" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" fill="none"/>
-          <path d="M160,514 Q270,508 400,516 Q530,522 640,510" stroke="rgba(255,255,255,0.07)" strokeWidth="1" fill="none"/>
-
-          {/* Village — houses */}
-          {[
-            [142,445,22,18],[163,450,16,14],[478,435,26,20],[506,442,17,14],
-            [590,418,20,16],[612,424,14,12],
-          ].map(([x,y,w,h],i)=>(
-            <g key={i} transform={`translate(${x},${y})`}>
-              <rect x="0" y={h*0.45} width={w} height={h} fill="#1a3d20" rx="1"/>
-              <polygon points={`${w/2},0 -2,${h*0.5} ${w+2},${h*0.5}`} fill="#102815"/>
-              <rect x={w*0.35} y={h*0.85} width={w*0.3} height={h*0.6} fill="#060f08"/>
-              <rect x="2" y={h*0.5} width={w*0.25} height={h*0.35} fill="rgba(255,225,120,0.2)" rx="1"/>
-              <rect x={w*0.72} y={h*0.5} width={w*0.25} height={h*0.35} fill="rgba(255,225,120,0.2)" rx="1"/>
-            </g>
-          ))}
-
-          {/* Chapel */}
-          <g transform="translate(352,370)" className="float">
-            <rect x="0" y="32" width="50" height="34" fill="#1e4a28" rx="2"/>
-            <polygon points="25,12 -2,34 52,34" fill="#163820"/>
-            <rect x="19" y="58" width="12" height="8" fill="#060f08"/>
-            <rect x="4" y="38" width="9" height="12" fill="rgba(255,240,160,0.3)" rx="1"/>
-            <rect x="37" y="38" width="9" height="12" fill="rgba(255,240,160,0.3)" rx="1"/>
-            <rect x="19" y="0" width="12" height="22" fill="#1a4225" rx="1"/>
-            <polygon points="25,-6 16,2 34,2" fill="#112a18"/>
-            <text x="25" y="82" textAnchor="middle" fill="rgba(255,255,255,0.4)"
-              style={{fontSize:"6px",fontFamily:"system-ui",fontWeight:"700",letterSpacing:"0.12em"}}>STE-ADÈLE</text>
-          </g>
-
-          {/* Coloured wave ribbon */}
-          <g className="wave-1"><path d="M-50,548 C150,528 380,562 630,542 C755,530 785,540 850,534 L850,575 L-50,575 Z" fill="#C0392B" opacity="0.88"/></g>
-          <g className="wave-2"><path d="M-50,558 C140,540 360,572 610,553 C740,542 778,552 850,545 L850,582 L-50,582 Z" fill="#E67E22" opacity="0.82"/></g>
-          <g className="wave-3"><path d="M-50,566 C155,550 375,580 625,562 C745,552 780,561 850,555 L850,590 L-50,590 Z" fill="#F1C40F" opacity="0.75"/></g>
-          <g className="wave-4"><path d="M-50,574 C148,559 368,587 618,570 C742,561 778,569 850,563 L850,598 L-50,598 Z" fill="#2980B9" opacity="0.82"/></g>
-          <g className="wave-5"><path d="M-50,581 C152,567 372,593 622,577 C744,568 779,576 850,570 L850,606 L-50,606 Z" fill="#1ABC9C" opacity="0.76"/></g>
-          <path d="M-50,588 C155,575 375,600 625,584 C746,575 780,583 850,577 L850,610 L-50,610 Z" fill="#27AE60" opacity="0.88"/>
-        </svg>
-      </div>
-
-      {/* Text content — centered, well above the mountain */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-        <div style={{marginTop:"-120px"}}>
-          <p className="fade-up text-xs font-bold tracking-[0.32em] mb-4 uppercase"
-            style={{color:"rgba(255,255,255,0.4)", fontFamily:"system-ui"}}>
-            {lang==="fr"?"Église Unie du Canada":"United Church of Canada"}
-          </p>
-          <h1 className="fade-up-2 font-bold text-white leading-tight mb-3"
-            style={{fontSize:"clamp(30px,6vw,62px)", textShadow:"0 2px 24px rgba(0,0,0,0.7)", maxWidth:"580px"}}>
-            {lang==="fr"?"Laurentides":"The Laurentians"}
-          </h1>
-          <p className="fade-up-3 text-white/55 mb-10 max-w-sm mx-auto"
-            style={{fontFamily:"system-ui", fontSize:"15px", lineHeight:"1.6"}}>
-            {lang==="fr"
-              ?"9 paroisses inclusives au nord de Montréal"
-              :"9 inclusive parishes north of Montreal"}
-          </p>
-
-          {/* Site selector cards */}
-          <div className="fade-up-4 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/lam"
-              className="py-4 px-7 rounded-2xl text-center transition-all hover:scale-105 hover:shadow-2xl"
-              style={{background:"rgba(255,255,255,0.09)", border:"1.5px solid rgba(255,255,255,0.18)", textDecoration:"none", minWidth:"180px"}}>
-              <div className="text-2xl mb-2">🌲</div>
-              <div className="font-bold text-white text-sm" style={{fontFamily:"system-ui"}}>
+        {/* Site cards — stacked on left */}
+        <div className="fade-up-4 flex flex-col gap-3">
+          <Link href="/lam"
+            className="py-4 px-6 rounded-2xl flex items-center gap-4 transition-all hover:scale-[1.02]"
+            style={{ background: "rgba(255,255,255,0.10)", border: "1.5px solid rgba(255,255,255,0.18)", textDecoration: "none" }}>
+            <span className="text-2xl flex-shrink-0">🌲</span>
+            <div>
+              <div className="font-bold text-white text-sm" style={{ fontFamily: "system-ui" }}>
                 {lang==="fr"?"Ministère régional":"Area Ministry"}
               </div>
-              <div className="text-white/35 text-xs mt-1" style={{fontFamily:"system-ui"}}>LAM — MRL · 9 {lang==="fr"?"paroisses":"parishes"}</div>
-            </Link>
-            <Link href="/sainte-adele"
-              className="py-4 px-7 rounded-2xl text-center transition-all hover:scale-105 hover:shadow-2xl"
-              style={{background:"rgba(255,255,255,0.09)", border:"1.5px solid rgba(255,255,255,0.18)", textDecoration:"none", minWidth:"180px"}}>
-              <div className="text-2xl mb-2">⛪</div>
-              <div className="font-bold text-white text-sm" style={{fontFamily:"system-ui"}}>
+              <div className="text-white/35 text-xs mt-0.5" style={{ fontFamily: "system-ui" }}>
+                LAM — MRL · 9 {lang==="fr"?"paroisses":"parishes"}
+              </div>
+            </div>
+          </Link>
+          <Link href="/sainte-adele"
+            className="py-4 px-6 rounded-2xl flex items-center gap-4 transition-all hover:scale-[1.02]"
+            style={{ background: "rgba(255,255,255,0.10)", border: "1.5px solid rgba(255,255,255,0.18)", textDecoration: "none" }}>
+            <span className="text-2xl flex-shrink-0">⛪</span>
+            <div>
+              <div className="font-bold text-white text-sm" style={{ fontFamily: "system-ui" }}>
                 {lang==="fr"?"Église Sainte-Adèle":"Sainte-Adèle Church"}
               </div>
-              <div className="text-white/35 text-xs mt-1" style={{fontFamily:"system-ui"}}>
+              <div className="text-white/35 text-xs mt-0.5" style={{ fontFamily: "system-ui" }}>
                 {lang==="fr"?"La Chapelle sur le Lac":"The Chapel on the Lake"}
               </div>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </div>
     </main>
