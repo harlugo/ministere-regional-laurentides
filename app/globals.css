@@ -128,18 +128,18 @@ body { font-family: Georgia, serif; background: var(--cream); color: #2c2c2c; ma
 .blog-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.12); }
 .blog-tag { display:inline-block; padding:2px 10px; border-radius:999px; font-size:11px; font-weight:700; font-family:system-ui; }
 
-/* Subtle cross glow — gentle, not blinding */
+/* Cross glow — emanates from the cross outward, subtle pulse */
 @keyframes crossGlow {
-  0%,100% { filter: drop-shadow(0 0 6px rgba(255,255,255,0.25)); opacity: 0.90; }
-  50%     { filter: drop-shadow(0 0 14px rgba(255,255,255,0.50)); opacity: 1; }
+  0%,100% { filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)) drop-shadow(0 0 22px rgba(255,255,255,0.18)); opacity: 0.88; }
+  50%     { filter: drop-shadow(0 0 16px rgba(255,255,255,0.85)) drop-shadow(0 0 42px rgba(255,255,255,0.30)); opacity: 1; }
 }
-.cross-glow { animation: crossGlow 4.5s ease-in-out infinite; }
+.cross-glow { animation: crossGlow 4s ease-in-out infinite; }
 
 @keyframes raysBreath {
-  0%,100% { opacity: 0.06; }
-  50%     { opacity: 0.12; }
+  0%,100% { opacity: 0.07; }
+  50%     { opacity: 0.14; }
 }
-.rays-breath { animation: raysBreath 4.5s ease-in-out infinite; }
+.rays-breath { animation: raysBreath 4s ease-in-out infinite; }
 
 /* Override cross-btn for better cross proportions */
 .cross-btn {
