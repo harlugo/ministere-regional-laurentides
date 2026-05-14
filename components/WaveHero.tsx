@@ -18,12 +18,12 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
         <svg viewBox="0 0 800 560" preserveAspectRatio="xMidYMid slice"
           className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <radialGradient id="outerHalo" cx="50%" cy="25%" r="65%">
+            <radialGradient id="outerHalo" cx="50%" cy="30%" r="65%">
               <stop offset="0%"   stopColor="white" stopOpacity="0.18"/>
               <stop offset="40%"  stopColor="white" stopOpacity="0.07"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
-            <radialGradient id="innerHalo" cx="50%" cy="25%" r="22%">
+            <radialGradient id="innerHalo" cx="50%" cy="30%" r="22%">
               <stop offset="0%"   stopColor="white" stopOpacity="0.32"/>
               <stop offset="100%" stopColor="white" stopOpacity="0"/>
             </radialGradient>
@@ -34,7 +34,7 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           <ellipse cx="400" cy="140" rx="180" ry="180" fill="url(#innerHalo)" className="cross-glow"/>
 
           {/* 24 rays from cross centre — reach all the way up AND down */}
-          <g className="rays-breath" transform="translate(400,140)">
+          <g className="rays-breath" transform="translate(400,180)">
             {Array.from({length: 24}, (_, i) => {
               const a = i * 15;
               const rad = (a - 90) * Math.PI / 180;
@@ -58,7 +58,7 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
           </g>
 
           {/* Cross — centred at top third, large and clear */}
-          <g className="cross-glow" transform="translate(400,140)">
+          <g className="cross-glow" transform="translate(400,180)">
             {/* Vertical — tall */}
             <rect x="-7" y="-72" width="14" height="144" rx="4" fill="white" opacity="0.97"/>
             {/* Horizontal — in upper third of vertical */}
@@ -83,7 +83,7 @@ export default function WaveHero({ title, subtitle, tagline, ctaLabel, ctaHref }
 
       {/* Text — centred, pushed below the cross zone */}
       <div className="relative z-10 flex flex-col items-center text-center px-6"
-        style={{ paddingTop: "240px", paddingBottom: "60px" }}>
+        style={{ paddingTop: "320px", paddingBottom: "60px" }}>
         <p className="fade-up text-xs font-bold tracking-[0.28em] text-white/45 mb-4 uppercase"
           style={{ fontFamily: "system-ui" }}>
           {tagline}
